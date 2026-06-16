@@ -1,12 +1,22 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f2ea;
+  --foreground: #201a15;
+  --muted: #756b62;
+  --card: #fffaf2;
+  --border: #ded4c8;
+  --accent: #4b3829;
+  --danger: #9d2f2f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #17130f;
+    --foreground: #f6efe7;
+    --muted: #b8aa9b;
+    --card: #211b16;
+    --border: #3a3028;
+    --accent: #ead8c3;
+    --danger: #ff9a9a;
   }
 }
 
@@ -33,6 +43,597 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.shell {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 40px 0 64px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(34px, 5vw, 60px);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-bottom: 14px;
+}
+
+h2 {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+  max-width: 720px;
+}
+
+.nav,
+.row,
+.sectionHeader,
+.selectionBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav a,
+.ghostButton,
+.button,
+.dangerButton {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 14px;
+}
+
+.nav a,
+.ghostButton {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.button {
+  align-self: flex-start;
+  background: var(--accent);
+  color: var(--background);
+}
+
+.dangerButton {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--danger) 50%, var(--border));
+  color: var(--danger);
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+}
+
+.clusterGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.atlasGraphShell {
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 55%),
+    var(--background);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.atlasGraph {
+  display: block;
+  min-height: 420px;
+  width: 100%;
+}
+
+.atlasGraph marker path {
+  fill: var(--accent);
+}
+
+.graphEdge {
+  stroke-linecap: round;
+}
+
+.graphEdge-cluster {
+  stroke: color-mix(in srgb, var(--muted) 45%, transparent);
+  stroke-dasharray: 5 9;
+  stroke-width: 1.5;
+}
+
+.graphEdge-relationship {
+  stroke: var(--accent);
+  stroke-width: 2.25;
+}
+
+.graphEdge-literary {
+  stroke: color-mix(in srgb, var(--accent) 65%, var(--muted));
+  stroke-dasharray: 2 7;
+  stroke-width: 1.6;
+}
+
+.graphEdge-generation {
+  stroke: color-mix(in srgb, var(--danger) 58%, var(--accent));
+  stroke-width: 1.8;
+}
+
+.graphEdgeLabel {
+  fill: var(--muted);
+  font-size: 12px;
+  paint-order: stroke;
+  stroke: var(--background);
+  stroke-width: 4px;
+  text-anchor: middle;
+}
+
+.graphNode {
+  outline: none;
+}
+
+.graphNode circle {
+  filter: drop-shadow(0 12px 18px color-mix(in srgb, var(--foreground) 12%, transparent));
+  transition: r 0.2s, stroke-width 0.2s;
+}
+
+.graphNode-cluster circle,
+.graphNode-tension circle {
+  fill: color-mix(in srgb, var(--accent) 18%, var(--card));
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.graphNode-thought,
+.graphNode-passage {
+  cursor: pointer;
+}
+
+.graphNode-thought circle,
+.graphNode-passage circle {
+  fill: var(--card);
+  stroke: var(--border);
+  stroke-width: 2;
+}
+
+.graphNode-thought:hover circle,
+.graphNode-thought:focus circle,
+.graphNode-passage:hover circle,
+.graphNode-passage:focus circle,
+.graphNodeSelected circle {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.graphNode-author circle,
+.graphNode-work circle,
+.graphNode-motif circle,
+.graphNode-rhetoric circle,
+.graphNode-affect circle,
+.graphNode-draft circle {
+  fill: color-mix(in srgb, var(--accent) 10%, var(--background));
+  stroke: color-mix(in srgb, var(--accent) 60%, var(--border));
+  stroke-width: 1.5;
+}
+
+.graphNode-draft circle {
+  fill: color-mix(in srgb, var(--danger) 12%, var(--background));
+  stroke: color-mix(in srgb, var(--danger) 65%, var(--border));
+}
+
+.graphNode text {
+  fill: var(--foreground);
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+.graphNode-cluster text,
+.graphNode-tension text {
+  font-size: 13px;
+}
+
+.graphStatus {
+  fill: var(--muted) !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+}
+
+.graphLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.graphLegend span {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 12px;
+  gap: 6px;
+}
+
+.graphLegend i {
+  border-radius: 999px;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+.legendCluster {
+  background: color-mix(in srgb, var(--accent) 30%, var(--card));
+  border: 1px solid var(--accent);
+}
+
+.legendThought {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.legendLiterary {
+  background: color-mix(in srgb, var(--accent) 12%, var(--background));
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.legendStored {
+  background: var(--accent);
+  height: 2px !important;
+  width: 18px !important;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.dropZone {
+  align-items: flex-start;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 14%, transparent), transparent 35%),
+    var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  min-height: 360px;
+  padding: 32px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.dropZoneActive {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.dropZone input {
+  margin-top: 8px;
+}
+
+.fileButton {
+  position: relative;
+}
+
+.fileButton input {
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+.twoCol {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  font-weight: 700;
+  gap: 7px;
+  letter-spacing: 0.02em;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.45;
+  padding: 11px 12px;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listItem,
+.thoughtCard,
+.axisRow {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.listItem span,
+.muted {
+  color: var(--muted);
+}
+
+.rawText {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  line-height: 1.65;
+  max-height: 520px;
+  overflow: auto;
+  padding: 18px;
+  white-space: pre-wrap;
+}
+
+.selectionBar {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.error {
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, var(--border));
+  border-radius: 12px;
+  color: var(--danger);
+  padding: 12px;
+}
+
+.studioTextArea {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  line-height: 1.55;
+  padding: 14px;
+  resize: vertical;
+}
+
+.mediaCard {
+  align-items: flex-start;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  color: var(--foreground);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 72px 1fr;
+  padding: 12px;
+  text-align: left;
+}
+
+.mediaCardSelected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.mediaCard code {
+  color: var(--muted);
+  font-size: 11px;
+  grid-column: 1 / -1;
+  max-height: 120px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.mediaCard small {
+  color: var(--muted);
+  display: block;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.mediaThumb,
+.mediaIcon {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  justify-content: center;
+  object-fit: cover;
+  width: 72px;
+}
+
+.sourceChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sourceChips span {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 7px 10px;
+}
+
+.inferredPanel {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+}
+
+.inferredPanel p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.iterationCard {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+}
+
+.iterationCard pre {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  line-height: 1.55;
+  max-height: 520px;
+  overflow: auto;
+  padding: 16px;
+  white-space: pre-wrap;
+}
+
+.generatedGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.generatedBox {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 360px;
+  padding: 18px;
+}
+
+.generatedBox textarea {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  flex: 1;
+  line-height: 1.55;
+  min-height: 260px;
+  padding: 14px;
+  resize: vertical;
+  white-space: pre-wrap;
+}
+
+.jobList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.jobList p {
+  font-size: 13px;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .header,
+  .sectionHeader,
+  .selectionBar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .grid,
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .nav {
+    justify-content: flex-start;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

@@ -14,11 +14,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'PUT') {
-    const { sourceType, title, author, citation, url, personalContext } = req.body
-    // rawText is intentionally omitted — never allow mutation
+    const {
+      sourceType,
+      title,
+      author,
+      citation,
+      url,
+      personalContext,
+      fragmentType,
+      canonRelationship,
+      isPromoted,
+    } = req.body
+    // rawText is intentionally omitted: canon edits must not mutate source wording.
     const [updated] = await db
       .update(sourceFragments)
-      .set({ sourceType, title, author, citation, url, personalContext })
+      .set({ sourceType, title, author, citation, url, personalContext, fragmentType, canonRelationship, isPromoted })
       .where(eq(sourceFragments.id, id))
       .returning()
     if (!updated) return res.status(404).json({ error: 'Fragment not found' })
